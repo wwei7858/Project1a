@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name = "William Wei CSCI301 Project 1a" default="compile" basedir=".">
+
+	<property name="source.dir" location="src"/>
+	<property name="build.dir" location="bin"/>
+	<property name="doc.dir" location="doc"/>
+	<property name="dist.dir" location="dist"/>
+	<property name="lib.dir" location="lib"/>
+	
+	
+	<target name = "init" description="setup project directores">
+		<mkdir dir="${build.dir}"/>
+		<mkdir dir="${doc.dir}"/>
+		<mkdir dir="${dis.dir}"/>
+	</target>
+	
+	<path id="build.classpath">
+    	<fileset dir="${lib.dir}">
+        	<include name="**/*.jar"/>
+   	 </fileset>
+	</path>
+	
+	<path id="classpath.test">
+    	<pathelement location="lib/junit-4.12.jar"/>
+    	<pathelement location="lib/hamcrest-core-1.3.jar"/>
+    	<pathelement location="${main.build.dir}"/>
+  	</path>
+
+	<path id="run.classpath">
+    	<pathelement location="${build.dir}"/>
+	</path>
+	
+	
+	<target name = "compile" depends="init" description="compile java sources">
+		<javac srcdir="${source.dir}" destdir="${build.dir}" includeantruntime="false" classpathref="build.classpath"></javac>	
+	</target>
+	
+	<target name="doc" depends="init" description="generate documentation">
+  		<javadoc sourcepath="${source.dir}" destdir="${doc.dir}" access="private" classpathref="build.classpath"/>
+ 	</target>
+	
+	<target name = "dist" depends="compile">
+		<jar destfile="${dis.dir}/SearchMap.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="SearchMap"/>
+			</manifest>
+		</jar>	
+	</target>
+	
+	
+	<target name = "clean" description="tidy up the workspace">
+		<delete dir="${build.dir}" />
+		<delete dir="${doc.dir}" />
+		<delete>
+			<fileset defaultexcludes="no" dir="${source.dir}" includes="**/*~" />
+		</delete>
+	</target>
+	
+  <target name="test" depends="compile" description="run tests">
+    	<junit printsummary="yes" haltonfailure="no">
+        	<classpath refid="build.classpath"/>
+        	<classpath refid="run.classpath"/>
+        	<formatter type="xml"/>
+        	<formatter type="plain"/>
+        	<batchtest fork="yes" todir=".">
+            	<fileset dir="${source.dir}">
+                	<include name="**/*Test*.java"/>
+            	</fileset>
+        	</batchtest>
+    	</junit>
+	</target>
+
+	
+	
+</project>

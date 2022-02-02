@@ -1,0 +1,4 @@
+Testsuite: weiwilli_CSCI301_Project1a.TestFlightMap
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.054 sec
+
+Testcase: testing took 0.001 sec
